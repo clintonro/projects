@@ -1,10 +1,16 @@
-- name: Reboot the machine with all defaults
-  win_reboot:
+- name: Reboot the machine!
+  hosts: all
+  tasks:
+       - name: Reboot the machine with all defaults
+         win_reboot:
 
-- name: Reboot a slow machine that might have lots of updates to apply
-  win_reboot:
-    reboot_timeout: 3600
+       - name: Reboot a slow machine that might have lots of updates to apply
+         win_reboot:
+           reboot_timeout: 3600
 
+       - name: Validate that the netlogon service has started, before running the next task
+         win_reboot:
+           test_command: 'exit (Get-Service -Name Netlogon).Status -ne "Running"'
 # Install a Windows feature and reboot if necessary
 #- name: Install IIS Web-Server
 #  win_feature:
@@ -28,6 +34,4 @@
 #    post_reboot_delay: 120
 
 # Or you can make win_reboot validate exactly what you need to work before running the next task
-- name: Validate that the netlogon service has started, before running the next task
-  win_reboot:
-    test_command: 'exit (Get-Service -Name Netlogon).Status -ne "Running"'
+
