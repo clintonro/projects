@@ -1,6 +1,6 @@
 ---
 - name: Execute PowerShell commands on Windows hosts
-  hosts: windows_servers
+  hosts: all
   gather_facts: false
 
   tasks:
