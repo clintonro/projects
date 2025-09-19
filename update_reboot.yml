@@ -1,0 +1,15 @@
+---
+- name: Execute PowerShell commands on Windows hosts
+  hosts: windows_servers
+  gather_facts: false
+
+  tasks:
+    - name: Update the Machine
+      ansible.windows.win_powershell:
+        script: |
+          Install-Module PSWindowsUpdate | Install-WindowsUpdate -AcceptAll -IgnoreReboot
+      
+    - name: Reboot the machine
+      ansible.windows.win_powershell:
+        script: |
+          Restart-Computer -Force -Wait
