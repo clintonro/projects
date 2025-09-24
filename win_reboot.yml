@@ -5,9 +5,9 @@
        - name: Reboot the machine with all defaults
          win_reboot:
 
-       - name: Reboot a slow machine that might have lots of updates to apply
-         win_reboot:
-           reboot_timeout: 3600
+#       - name: Reboot a slow machine that might have lots of updates to apply
+#         win_reboot:
+#           reboot_timeout: 3600
 
        - name: Validate that the netlogon service has started, before running the next task
          win_reboot:
