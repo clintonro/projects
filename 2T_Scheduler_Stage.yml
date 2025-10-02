@@ -1,8 +1,11 @@
 ---
-- name: 2T Scheduler
+- name: 2T Scheduler Update
   hosts: localhost
   tasks:
-    - name: Build a schedule for Demo Job Template
+  - name: Get date and time
+      shell: date --date 'now + "{{minuets}}" "{{min_hour}}"' '+%Y%m%dT%H:%M:%SZ'
+      register: date_time
+    - name: Update Stage DCs
       ansible.controller.schedule:
         controller_host: "{{controller_host}}"
         controller_username: "{{controller_username}}"
@@ -10,8 +13,8 @@
         validate_certs: false
         name: "{{ controller_username }}"
         state: present
-        unified_job_template: "{{template_name}}"
+        unified_job_template: "{{execute_template}}"
         extra_data:
           schedule_name: "{{schedule_name}}"
-        rrule: "FREQ=MONTHLY;INTERVAL=1;BYDAY=2TU"
+        rrule: "DTSTART:{{date_time.stdout}} FREQ=MONTHLY;INTERVAL=1;BYDAY=2TU"
       register: result
