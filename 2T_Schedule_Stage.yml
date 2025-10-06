@@ -1,0 +1,17 @@
+---
+- name: Create schedule for the second Tuesday of every month
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Create job template schedule
+      awx.awx.schedule:
+        controller_host: "https://10.1.10.35"
+        controller_username: "admin"
+        controller_password: "<your_aap_password>"
+        job_template: "My-Job-Template-Name"
+        name: "Second Tuesday Monthly Run"
+        rrule: "FREQ=MONTHLY;BYDAY=2TU"
+        start_date: "2025-10-14"  # Optional: Set the initial start date
+        start_time: "09:00"      # Optional: Set the initial start time
+        state: "present"
