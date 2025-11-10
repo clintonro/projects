@@ -1,15 +1,23 @@
 ---
-- name: Manage Windows Service
-  hosts: all # Replace with the name of your Windows host group in AWX
-  gather_facts: false
+- name: Manage Windows Services
+  hosts: all
+  gather_facts: true
+
   tasks:
-    - name: Check and restart service if stopped
-      ansible.windows.win_service:
-        name: YourServiceName # Replace with the actual service name (e.g., 'Spooler')
+    - name: Check service status and start if stopped
+      win_service:
+        name: "{{ item.name }}"
         state: started
-        start_mode: auto # Optional: Set the startup mode to automatic if needed
+      loop:
+        - { name: "Service1" } # Replace with your service names
+        - { name: "Service2" }
+        - { name: "Service3" }
+        - { name: "Service4" }
+        - { name: "Service5" }
       register: service_status
 
-    - name: Display service status
-      ansible.builtin.debug:
-        msg: "Service '{{ service_status.name }}' is now in state: {{ service_status.state }}"
+    - name: Display service status changes
+      debug:
+        msg: "Service '{{ item.item.name }}' was {{ 'started' if item.changed else 'already running' }}"
+      loop: "{{ service_status.results }}"
+      when: item.changed or item.skipped
