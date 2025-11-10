@@ -16,8 +16,8 @@
         - { name: "MSExchangeTransport" }
       register: service_status
 
-    - name: Display service status changes
-      debug:
-        msg: "Service '{{ item.item.name }}' was {{ 'started' if item.changed else 'already running' }}"
-      loop: "{{ service_status.results }}"
-      when: item.changed or item.skipped
+#    - name: Display service status changes
+#      debug:
+#        msg: "Service '{{ item.item.name }}' was {{ 'started' if item.changed else 'already running' }}"
+#      loop: "{{ service_status.results }}"
+#      when: item.changed or item.skipped
