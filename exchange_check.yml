@@ -9,11 +9,11 @@
         name: "{{ item.name }}"
         state: started
       loop:
-        - { name: "{{ Service1 }}" } # Replace with your service names
-        - { name: "{{ Service2 }}" }
-        - { name: "{{ Service3 }}" }
-        - { name: "{{ Service4 }}" }
-        - { name: "{{ Service5 }}" }
+        - { name: "{{Service1}}" } # Replace with your service names
+        - { name: "{{Service2}}" }
+        - { name: "{{Service3}}" }
+        - { name: "{{Service4}}" }
+        - { name: "{{Service5}}" }
       register: service_status
 
     - name: Display service status changes
