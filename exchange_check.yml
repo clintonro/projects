@@ -9,11 +9,11 @@
         name: "{{ item.name }}"
         state: started
       loop:
-        - { name: "{{Service1}}" } # Replace with your service names
-        - { name: "{{Service2}}" }
-        - { name: "{{Service3}}" }
-        - { name: "{{Service4}}" }
-        - { name: "{{Service5}}" }
+        - { name: "MSExchangeADTopology" } # Replace with your service names
+        - { name: "MSExchangePop3" }
+        - { name: "MSExchangeImap4" }
+        - { name: "MSExchangeServiceHost" }
+        - { name: "MSExchangeTransport" }
       register: service_status
 
     - name: Display service status changes
