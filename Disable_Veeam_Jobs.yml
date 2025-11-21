@@ -1,0 +1,28 @@
+---
+- name: Disable a Veeam Backup Job
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Disable the specified Veeam job via PowerShell
+      ansible.windows.win_powershell:
+        script: |
+          # Add the Veeam PowerShell snap-in
+          Add-PSSnapin Veeam.Backup.PowerShell
+
+          # Define the job name
+          $jobName = "{{ Tier*, iLand* }}"
+
+          # Get the job object
+          $job = Get-VBRJob -Name $jobName
+
+          if ($job) {
+            # Disable the job
+            Disable-VBRJob -Job $job -Confirm:$false
+            Write-Host "Veeam job '$jobName' has been disabled."
+          } else {
+            Write-Host "Veeam job '$jobName' not found."
+          }
+      register: veeam_disable_output
+
+    - name: Display the result
+      ansible.builtin.debug:
