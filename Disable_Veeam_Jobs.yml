@@ -6,8 +6,6 @@
     - name: Disable the Tier Veeam job via PowerShell
       ansible.windows.win_powershell:
         script: |
-          # Add the Veeam PowerShell snap-in
-          # Add-PSSnapin Veeam.Backup.PowerShell
 
           # Define the job name
           $jobName = "{{ Tier* }}"
@@ -30,8 +28,6 @@
     - name: Disable the iLand Veeam job via PowerShell
       ansible.windows.win_powershell:
         script: |
-          # Add the Veeam PowerShell snap-in
-          # Add-PSSnapin Veeam.Backup.PowerShell
 
           # Define the job name
           $jobName = "{{ iLand* }}"
