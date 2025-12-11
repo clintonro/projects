@@ -1,4 +1,9 @@
-- name: Run basic PowerShell script
-  ansible.windows.win_powershell:
-    script: |
-      echo "Hello World"
+---
+- name:  #Enter a name for playbook
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Run basic PowerShell script
+      ansible.windows.win_powershell:
+        script: |
+          echo "Hello World"
