@@ -1,8 +1,4 @@
 ---
-- name: Disable a Veeam Backup Job
-  hosts: all
-  gather_facts: true
-  tasks:
   pipeline {
          agent any
          stages {
@@ -12,7 +8,7 @@
                  # Connect to Veeam Backup Server (if needed, requires Veeam PowerShell snap-in)
                  # Connect-VBRServer -Server "YourVeeamServer"
                  # Get the job object
-                        $job = Get-VBRJob -Name "MyCriticalBackupJob"
+                        $job = Get-VBRJob -Name "Tier*"
                  # Disable the job
                          Disable-VBRJob -Job $job
                          Write-Host "Job 'MyCriticalBackupJob' disabled."
@@ -21,10 +17,6 @@
              }
          }
      }
-   register: veeam_disable_output
-
-    - name: Display the result
-      ansible.builtin.debug:
 ...
 #---
 #    - name: Disable the iLand Veeam job via PowerShell
