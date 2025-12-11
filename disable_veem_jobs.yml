@@ -5,7 +5,7 @@
   tasks:
     - name: Disable the Tier Veeam job via PowerShell
       ansible.windows.win_powershell:
-        script: |
+        script:
           # Add the Veeam PowerShell snap-in
           # Add-PSSnapin Veeam.Backup.PowerShell
 
@@ -30,7 +30,7 @@
 #---
 #    - name: Disable the iLand Veeam job via PowerShell
 #      ansible.windows.win_powershell:
-#        script: |
+#        script:
           # Add the Veeam PowerShell snap-in
           # Add-PSSnapin Veeam.Backup.PowerShell
 
