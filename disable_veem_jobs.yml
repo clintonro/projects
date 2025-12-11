@@ -6,14 +6,9 @@
     - name: Disable the Tier Veeam job via PowerShell
       ansible.windows.win_powershell:
         script: |
-          # Add the Veeam PowerShell snap-in
-          # Add-PSSnapin Veeam.Backup.PowerShell
-          # Define the job name
           $jobName = "{{ Tier* }}"
-          # Get the job object
           $job = Get-VBRJob -Name $jobName
           if ($job) {
-            # Disable the job
             Disable-VBRJob -Job $job -Confirm:$false
             Write-Host "Veeam job '$jobName' has been disabled."
           } else {
