@@ -5,15 +5,27 @@
   tasks:
     - name: Disable the Tier Veeam job via PowerShell
       ansible.windows.win_powershell:
-        script: |
-          $jobName = "{{ Tier* }}"
-          $job = Get-VBRJob -Name $jobName
-          if ($job) {
-            Disable-VBRJob -Job $job -Confirm:$false
-            Write-Host "Veeam job '$jobName' has been disabled."
-          } else {
-            Write-Host "Veeam job '$jobName' not found."
-          }
+        pipeline {
+            agent any
+            stages {
+                stage('Disable Veeam Job') {
+                    steps {
+                        powershell """
+                    # Connect to Veeam Backup Server (if needed, requires Veeam PowerShell snap-in)
+                    # Connect-VBRServer -Server "YourVeeamServer"
+
+                    # Get the job object
+                            $job = Get-VBRJob -Name "MyCriticalBackupJob"
+
+                    # Disable the job
+                            Disable-VBRJob -Job $job
+                            Write-Host "Job 'MyCriticalBackupJob' disabled."
+                        """
+                    }
+                }
+            }
+        }
+
       register: veeam_disable_output
 
     - name: Display the result
