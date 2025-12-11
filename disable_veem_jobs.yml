@@ -3,29 +3,25 @@
   hosts: all
   gather_facts: true
   tasks:
-    - name: Disable the Tier Veeam job via PowerShell
-        pipeline {
-            agent any
-            stages {
-                stage('Disable Veeam Job') {
-                    steps {
-                        powershell """
-                    # Connect to Veeam Backup Server (if needed, requires Veeam PowerShell snap-in)
-                    # Connect-VBRServer -Server "YourVeeamServer"
-
-                    # Get the job object
-                            $job = Get-VBRJob -Name "MyCriticalBackupJob"
-
-                    # Disable the job
-                            Disable-VBRJob -Job $job
-                            Write-Host "Job 'MyCriticalBackupJob' disabled."
-                        """
-                    }
-                }
-            }
-        }
-
-      register: veeam_disable_output
+  pipeline {
+         agent any
+         stages {
+             stage('Disable Veeam Job') {
+                 steps {
+                     powershell """
+                 # Connect to Veeam Backup Server (if needed, requires Veeam PowerShell snap-in)
+                 # Connect-VBRServer -Server "YourVeeamServer"
+                 # Get the job object
+                        $job = Get-VBRJob -Name "MyCriticalBackupJob"
+                 # Disable the job
+                         Disable-VBRJob -Job $job
+                         Write-Host "Job 'MyCriticalBackupJob' disabled."
+                     """
+                 }
+             }
+         }
+     }
+   register: veeam_disable_output
 
     - name: Display the result
       ansible.builtin.debug:
