@@ -10,7 +10,7 @@
           # Add-PSSnapin Veeam.Backup.PowerShell
 
           # Define the job name
-          $jobName = "{{ Tier* }}"
+          $jobName = "{ Tier* }"
 
           # Get the job object
           $job = Get-VBRJob -Name $jobName
@@ -26,7 +26,7 @@
 
     - name: Display the result
       ansible.builtin.debug:
-#...
+...
 #---
 #    - name: Disable the iLand Veeam job via PowerShell
 #      ansible.windows.win_powershell:
