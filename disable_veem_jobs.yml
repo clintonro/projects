@@ -1,4 +1,7 @@
 ---
+- name:  #Enter a name for playbook
+  hosts: all
+  gather_facts: true
   pipeline {
          agent any
          stages {
