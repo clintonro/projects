@@ -4,7 +4,7 @@
   gather_facts: false
   tasks:
     - name: Execute multi-lined PowerShell commands
-      ansible.windows.win_shell: "{{ lookup('file', 'script_veeam/veeam_disable.ps1') }}"
+      ansible.windows.win_shell: "{{ lookup('file', 'scripts/veeam_disable.ps1') }}"
       register: pwsh_output
 
     - name: Display script output
