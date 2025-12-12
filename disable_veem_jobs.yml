@@ -7,9 +7,8 @@
       ansible.windows.win_powershell:
         script: |
           $jobName = "iLand*"
-          $job = Get-VBRJob -Name $jobName
           if ($job) {
-            Disable-VBRJob -Job $job -Confirm:$false}
+            Disable-VBRJob -Job $jobName -Confirm:$false}
             Write-Host "Veeam job '$jobName' has been disabled."
           else
             Write-Host "Veeam job '$jobName' not found."
