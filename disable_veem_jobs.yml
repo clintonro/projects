@@ -1,6 +1,6 @@
 ---
 - name: Run inline PowerShell script
-  hosts: windows_hosts
+  hosts: all
   gather_facts: false
   tasks:
     - name: Execute multi-lined PowerShell commands
