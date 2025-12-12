@@ -1,18 +1,13 @@
----
-- name: Run inline PowerShell script
-  hosts: all
+- name: Disable Veeam Job
+  hosts: your_veeam_server_group # Defined in your inventory
   gather_facts: false
   tasks:
-    - name: Execute multi-lined PowerShell commands
-      ansible.windows.win_powershell:
-        script: |
-          $jobName = "iLand*"
-          if ($job) {
-            Disable-VBRJob -Job $jobName -Confirm:$false}
-            Write-Host "Veeam job '$jobName' has been disabled."
-          else
-            Write-Host "Veeam job '$jobName' not found."
-      register: veeam_disable_output
-
-    - name: Display the result
-      ansible.builtin.debug:
+    - name: Load Veeam PowerShell Snap-in & Disable Job
+      win_shell: |
+        Add-PSSnapin VeeamPSSnapin -ErrorAction Stop;
+        Get-VBRJob -Name "Tier*" | Disable-VBRJob -ErrorAction Stop;
+        Write-Host "Job 'Tier*' disabled successfully.";
+      args:
+        executable: powershell.exe
+      register: disable_job_result
+      changed_when: disable_job_result.rc == 0
