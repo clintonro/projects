@@ -1,5 +1,5 @@
 - name: Disable Veeam Job
-  hosts: your_veeam_server_group # Defined in your inventory
+  hosts: all # Defined in your inventory
   gather_facts: false
   tasks:
     - name: Load Veeam PowerShell Snap-in & Disable Job
