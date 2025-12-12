@@ -1,4 +1,8 @@
 ---
+- name: Disable veeam jobs for update/reboot #Enter a name for playbook
+  hosts: all
+  gather_facts: true
+  tasks:
     - name: Disable the iLand Veeam job via PowerShell
       ansible.windows.win_powershell:
         script: |
