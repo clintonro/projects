@@ -4,7 +4,6 @@
   tasks:
     - name: Load Veeam PowerShell Snap-in & Disable Job
       win_shell: |
-        Add-PSSnapin VeeamPSSnapin -ErrorAction Stop;
         Get-VBRJob -Name "Tier*" | Disable-VBRJob -ErrorAction Stop;
         Write-Host "Job 'Tier*' disabled successfully.";
       args:
