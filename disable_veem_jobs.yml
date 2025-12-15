@@ -1,5 +1,6 @@
-- name: Disable Veeam Job
-  hosts: all # Defined in your inventory
+---
+- name: Disable Veeam Job - Tier
+  hosts: SRVRVEEAM100 # Defined in your inventory
   gather_facts: false
   tasks:
     - name: Load Veeam PowerShell Snap-in & Disable Job
@@ -10,3 +11,74 @@
         executable: powershell.exe
       register: disable_job_result
       changed_when: disable_job_result.rc == 0
+...
+---
+- name: Disable Veeam Job - iLand
+  hosts: SRVRVEEAM100 # Defined in your inventory
+  gather_facts: false
+  tasks:
+    - name: Load Veeam PowerShell Snap-in & Disable Job
+      win_shell: |
+        Get-VBRJob -Name "iLand*" | Disable-VBRJob -ErrorAction Stop;
+        Write-Host "Job 'iLand*' disabled successfully.";
+      args:
+        executable: powershell.exe
+      register: disable_job_result
+      changed_when: disable_job_result.rc == 0
+...
+---
+- name: Update the machine!
+  hosts: all
+  gather_facts: true
+  tasks:
+       - name: Install all security, critical, and rollup updates with a scheduled task
+         ansible.windows.win_updates:
+           category_names:
+             - SecurityUpdates
+             - CriticalUpdates
+             - UpdateRollups
+...
+---
+- name: Reboot the machine!
+  hosts: all
+  gather_facts: true
+  tasks:
+#       - name: Reboot the machine with all defaults
+#         win_reboot:
+
+#       - name: Reboot a slow machine that might have lots of updates to apply
+#         win_reboot:
+#           reboot_timeout: 3600
+
+       - name: Validate that the netlogon service has started, before running the next task
+         win_reboot:
+           test_command: 'exit (Get-Service -Name Netlogon).Status -ne "Running"'
+...
+---
+- name: Disable Veeam Job - Tier
+  hosts: SRVRVEEAM100 # Defined in your inventory
+  gather_facts: false
+  tasks:
+    - name: Load Veeam PowerShell Snap-in & Disable Job
+      win_shell: |
+        Get-VBRJob -Name "Tier*" | Start-VBRJob -ErrorAction Stop;
+        Write-Host "Job 'Tier*' started successfully.";
+      args:
+        executable: powershell.exe
+      register: start_job_result
+      changed_when: start_job_result.rc == 0
+...
+---
+- name: Disable Veeam Job - iLand
+  hosts: SRVRVEEAM100 # Defined in your inventory
+  gather_facts: false
+  tasks:
+    - name: Load Veeam PowerShell Snap-in & Disable Job
+      win_shell: |
+        Get-VBRJob -Name "iLand*" | Start-VBRJob -ErrorAction Stop;
+        Write-Host "Job 'iLand*' started successfully.";
+      args:
+        executable: powershell.exe
+      register: start_job_result
+      changed_when: start_job_result.rc == 0
+
