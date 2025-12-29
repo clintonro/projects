@@ -11,8 +11,6 @@
         executable: powershell.exe
       register: disable_job_result
       changed_when: disable_job_result.rc == 0
-
----
 - name: Disable Veeam Job - iLand
   hosts: SRVRVEEAM100 # Defined in your inventory
   gather_facts: false
@@ -25,8 +23,6 @@
         executable: powershell.exe
       register: disable_job_result
       changed_when: disable_job_result.rc == 0
-
----
 - name: Update the machine!
   hosts: all
   gather_facts: true
@@ -37,8 +33,6 @@
              - SecurityUpdates
              - CriticalUpdates
              - UpdateRollups
-
----
 - name: Reboot the machine!
   hosts: all
   gather_facts: true
@@ -53,8 +47,6 @@
        - name: Validate that the netlogon service has started, before running the next task
          win_reboot:
            test_command: 'exit (Get-Service -Name Netlogon).Status -ne "Running"'
-
----
 - name: Disable Veeam Job - Tier
   hosts: SRVRVEEAM100 # Defined in your inventory
   gather_facts: false
@@ -67,8 +59,6 @@
         executable: powershell.exe
       register: start_job_result
       changed_when: start_job_result.rc == 0
-
----
 - name: Disable Veeam Job - iLand
   hosts: SRVRVEEAM100 # Defined in your inventory
   gather_facts: false
